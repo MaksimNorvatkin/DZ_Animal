@@ -11,7 +11,7 @@ import validators.WeightValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
+
 
 public class Main {
 
@@ -20,9 +20,9 @@ public class Main {
         List<Animal> animalList = new ArrayList<>();
 
         DataValidator commandValidator = new DataValidator();
-        NumberValidator numberValidator = new NumberValidator();
         AgeValidator ageValidator = new AgeValidator();
         WeightValidator weightValidator = new WeightValidator();
+        NumberValidator numberValidator = new NumberValidator();
 
 
         while (true){
@@ -38,7 +38,7 @@ public class Main {
 
             switch (commandsData) {
                 case ADD:
-                    String animalTypeStr = "";
+                    String animalTypeStr ="";
                     while (true) {
                         System.out.println("Введите тип животного cat/dog/duck:");
                         animalTypeStr = scanner.next().toUpperCase().trim();
@@ -50,8 +50,16 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("Введите имя животного:");
-                    String name = scanner.next();
+                    String nameStr ="";
+                    while (true) {
+                        System.out.println("Введите имя животного:");
+                        nameStr = scanner.next();
+                        if (numberValidator.isNumber(nameStr)) {
+                            System.out.println("Имя не должено быть числом");
+                            continue;
+                        }
+                        break;
+                    }
 
                     int animalAge = -1;
                     while(true){
@@ -59,7 +67,7 @@ public class Main {
                         String ageStr = scanner.next();
                         if(!ageValidator.isValidate(ageStr)){
                             continue;
-                        };
+                        }
                         animalAge = Integer.parseInt(ageStr);
                         break;
                     }
@@ -75,11 +83,19 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("Введите цвет животного:");
-                    String color = scanner.next();
+                    String colorStr = "";
+                    while (true) {
+                        System.out.println("Введите цвет животного:");
+                        colorStr = scanner.next();
+                        if (numberValidator.isNumber(colorStr)) {
+                            System.out.println("Цвет не должео быть числом");
+                            continue;
+                        }
+                        break;
 
+                    }
 
-                    AnimalFactory animalFactory = new AnimalFactory(animalAge, name, animalWeight, color);
+                    AnimalFactory animalFactory = new AnimalFactory(animalAge, nameStr, animalWeight, colorStr);
                     Animal animal = animalFactory.create(AnimalData.valueOf(animalTypeStr));
 
                     animalList.add(animal);

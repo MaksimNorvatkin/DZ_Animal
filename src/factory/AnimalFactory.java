@@ -22,13 +22,10 @@ public class AnimalFactory {
 
 
     public Animal create(AnimalData animalData) {
-        switch (animalData) {
-            case CAT:
-                return new Cat(this.age, this.name, this.weight, this.color);
-            case DOG:
-                return new Dog(this.age, this.name, this.weight, this.color);
-            default:
-                return new Duck(this.age, this.name, this.weight, this.color);
-        }
+        return switch (animalData) {
+            case CAT -> new Cat(this.age, this.name, this.weight, this.color);
+            case DOG -> new Dog(this.age, this.name, this.weight, this.color);
+            default -> new Duck(this.age, this.name, this.weight, this.color);
+        };
     }
 }
